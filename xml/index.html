@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XML File Manager</title>
+    <link media="all" rel="stylesheet" href="css/xmltree.css" />
+</head>
+
+<body>
+    <div id="topbar">
+      <div id="top-header">
+        <a id="appname" href="/">XML File Manager</a>
+      </div>
+    </div>
+      <div id="filename"></div>
+
+	<input hidden id="thisfile" name="thisfile" placeholder="XML filename" value="" />
+
+    <button id="showAllPM">Show All</button>
+    <button id="collapseAllPM">Collapse All (except root)</button>
+
+    <div class="explorer"></div>
+
+  
+    <div id="btmbar">
+        <a href="/"><img src="../images/glyphicons-21-home.png" id="homebtn" alt="Home" title="Home" /></a>
+        <a href="#topbar"><img src="../images/glyphicons-219-circle-arrow-top.png" id="totopbtn" alt="To Top" title="To Top" /></a>
+        <a href="#"><img src="../images/glyphicons-217-circle-arrow-left.png" id="backbtn" alt="Go Back" title="Go Back" /></a>
+    </div>
+
+</body>
+
+<script src="../js/jquery-1.12.4.min.js"></script>
+<script>
+    $("#thisfile").val(window.location.href.slice(32));
+    var body = document.getElementsByTagName("body")[0];
+    var js = document.createElement("script");
+    js.type = "text/javascript";
+    js.src="js/xmltree.js";
+    body.appendChild(js);
+    var i = $("#thisfile").val().lastIndexOf("/");
+    var filedir = $("#thisfile").val().slice(0, i);
+    var filename = $("#thisfile").val().slice(i + 1);
+    i = filename.lastIndexOf("#");
+    if (i > -1) {
+        filename = filename.slice(0, i);
+    }  
+    document.getElementById("filename").innerHTML = "File Name<br><strong>" + filename + "</strong>";
+
+    $("#showAllPM").click(function () {
+        "use strict";
+        var x, plusMin = document.querySelectorAll(".xmltree.startExpanded ul");
+        for (x = 0; x < plusMin.length; x+=1) {
+            plusMin[x].style.display = "block";
+        }
+    });
+
+    $("#collapseAllPM").click(function () {
+        "use strict";
+        var x, plusMin = document.querySelectorAll(".xmltree.startExpanded ul");
+        for (x = 1; x < plusMin.length; x+=1) {
+            plusMin[x].style.display = "none";
+        }
+    });
+
+    $(document).ready(function () {
+        "use strict";
+        setTimeout(function () {
+            var theselinks = document.querySelectorAll(".explorer a");
+            for (var i = 0; i < theselinks.length; i+= 1) {
+                var thishref = theselinks[i].getAttribute("href");
+                theselinks[i].setAttribute("href", filedir + thishref);
+            }
+            var thesesrcs = document.querySelectorAll(".explorer img");
+            for (var j = 0; j < thesesrcs.length; j+= 1) {
+                var thissrc = thesesrcs[j].getAttribute("src");
+                $(thesesrcs[j]).attr("src", filedir + thissrc);
+            }
+         },3000);
+     });
+
+
+    $("#backbtn").click(function () {
+        "use strict";
+        window.history.back();
+    });
+</script>
+
+</html>

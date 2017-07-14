@@ -1,0 +1,49 @@
+.xmltree { font-family: Helvetica, Arial, sans-serif; font-size: 14px; }
+.xmltree ul { display: none; }
+.xmltree ul, .xmltree.xmltree li { list-style: none; }
+.xmltree.startExpanded ul { display: block; }
+.xmltree ul { margin: 0; padding: 10px 0 0px 0; margin-left: 15px; border-left: solid 1px #808080; }
+.xmltree li { font-weight: normal; padding: 0 0 0 12px; display: block; position: relative; margin-top: 9px; margin-bottom: 9px; border: none; }
+.xmltree .attr { margin: -3px 0 7px 0; }
+.xmltree a:hover { color: #d00; }
+.xmltree .LIText, .xmltree .noKids .LIText:hover, .xmltree .currSel li .LIText { color: #333;}
+.xmltree .tree_node { margin-right: 8px; background: #336; background: #ccc; padding: 2px 4px; color: #f4f4f4; color: #006;}
+.xmltree .attr span { color: #373; }
+.xmltree .attrValue { margin-left: 8px; }
+.xmltree .tree_node, .xmltree .attr span, .xmltree .LIText { display: inline !important; }
+.xmltree.hideAttrs .attr, .xmltree.hideNodeNames .tree_node { display: none !important; }
+.xmltree .currSel .LIText { color: #d00; text-decoration: none !important; }
+.xmltree .plusMin { position: absolute; width: 11px; height: 11px; top: 2px; left: -7px; background: #99c; border: solid 1px #006; color: #006; font-size: 15px; font-weight:bold; text-align: center; line-height: 9px; cursor: pointer; }
+.xmltree .plusMin:hover { border-color: #006; background: #9c9; background: darkorange;}
+.xmltree .noKids .plusMin { display: none; }
+.xmltree.subTreeRequestsOnAllNodes .plusMin, .xmltree .subTreeNode .plusMin { display: block; }
+.xmltree .LIText2, .xmltree .noKids .LIText2:hover, .xmltree .currSel li .LIText2 {font-size: 12px;}
+.grey {background: #f8f8f8; }
+
+#top-header {height: 52px; background: #F4F4F4; margin:-10px -10px 30px -10px; border-bottom: 1px solid #e5e5e5;}
+#namebar {
+    margin:0;
+    padding: 15px 0 0 20px;
+    background-color: #e5e5e5;
+    width: 180px;
+    height: 37px;
+}
+#namebar:hover {background: #F4F4F4;}
+#appname {color:#009;font:18px Helvetica, Arial, sans-serif;}
+#top-header a {text-decoration:none;}
+#top-header a:hover, #top-header a:active {text-decoration:none; color: darkorange;}
+#top-header:hover, #top-header:active {text-decoration:none; background: white;}
+
+#topbar {margin:0 -15px 0 -15px; margin:-10px -10px 0 -10px; padding: 0 0 0px 0; background-color: #f4f4f4; border-bottom: 1px solid #e5e5e5;}
+
+#top-header {width:160px; height:25px; margin:0; padding:21px 15px 15px 27px; background: #e5e5e5}
+#filename {float:right; width: 75%; min-width: 360px; margin: -45px 15px 0 0; color:black;font:12px Helvetica, Arial, sans-serif; text-align:right;}
+.explorer {clear:both; margin-top:50px;}
+
+#showAllPM, #collapseAllPM {margin-top:30px; margin-left:20px; width:100px; height:40px; background: darkorange; color:white; border:none;}
+#collapseAllPM {width:180px;}
+#showAllPM:hover, #showAllPM:active, #collapseAllPM:hover, #collapseAllPM:active {background:orange;}
+
+#homebtn {width:19px;height:18px;}
+#btmbar {background: #F4F4F4; background: #428BCA; background: #337ab7; margin:30px -10px -20px -10px; padding:10px 20px 10px 20px;}
+#totopbtn, #backbtn {width:19px;height:19px;margin-left:20px;}

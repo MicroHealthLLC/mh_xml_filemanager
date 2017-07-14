@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XML File Manager</title>
+    <link href="css/contextMenu.css" rel="stylesheet" type="text/css" />
+<!--    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">  -->
+    <link media="all" rel="stylesheet" href="css/jquery-ui.css" />
+    <link media="all" rel="stylesheet" href="css/bootstrap.css" />
+    <link media="all" rel="stylesheet" href="css/default.css" />
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/contextMenu.js"></script>
+    <!-- jquery file manager plugin -->
+    <link media="all" rel="stylesheet" href="js/jquery.file-manager/jquery.file-manager.css" />
+    <link media="all" rel="stylesheet" href="css/styles.css" />
+    <script src="js/jquery.file-manager/jquery.file-manager.js"></script>
+    <script src="js/Services.js"></script>
+</head>
+
+<body>
+
+    <div id="newfolder_div">
+        <h4>New Folder Form</h4>
+        <form id="newfolder_form" method="POST" action="/newfolder">
+            <label for="newfolder_name">Name:</label>
+            <input type="text" name="newfolder_name" id="newfolder_name" placeholder="Folder Name" value="" />
+            <label for="newfolder_path">Path:</label>
+            <input type="text" name="newfolder_path" id="newfolder_path" placeholder="folder_name" value="" />
+            <input hidden type="text" name="folder_upload_directory" id="folder_upload_directory" value="" />
+            <br>
+            <button type="submit" class="formrightbtn" id="submitnewfolder" title="Submit New Folder Form button"><img src="images/glyphicons-199-ok-circle.png" /></button>
+            <button type="reset" class="formrightbtn" id="resetnewfolder" title="Reset New Folder Form button"><img src="images/glyphicons-82-refresh.png" /></button>
+        </form>
+    </div><!-- newfolder_div --> 
+
+    <div id="uploadfile_div">
+        <h4>Upload File(s) Form</h4>
+        <form id="uploadfile_form" enctype="multipart/form-data" action="/uploadfile" method="POST">
+            <input type="file" class="btn btn-primary btn-md uploadfilebtn" id="filebrowsebtn" title="Select File to Upload button" name="userFile" />
+            <div id="uploadfilebtns">
+            </div>
+            <input hidden type="text" name="file_upload_directory" id="file_upload_directory" value="" />
+            <div id="uploadformbtns" class="buttonrow">
+                <button type="button" class="formbtn" id="addfileuploadbtn" title="Add Another File button"><img src="images/glyphicons-703-file-plus.png" /></button>
+                <div id="uploadbtns">
+                <button type="submit" class="formrightbtn" id="submituploadfile" title="Submit Upload Form button"><img src="images/glyphicons-199-ok-circle.png" /></button>
+                <button type="reset" class="formrightbtn" id="resetuploadform" title="Reset Upload Form button"><img src="images/glyphicons-82-refresh.png" /></button>
+                </div>
+            </div>
+        </form>
+    </div><!-- uploadfile_div -->    
+
+    <div id="deleteitemform_div">
+        <h4>Delete File/Folder Form</h4>
+        <form id="deleteitem_form" method="POST" action="/deleteitem">
+            <label for="delete_item_id">Item ID:</label>
+            <input type="text" name="delete_item_id" id="delete_item_id" placeholder="Item ID" value="" />
+            <label for="delete_item_parent">Parent:</label>
+            <input type="text" name="delete_item_parent" id="delete_item_parent" placeholder="delete_item_parent" value="" />
+        </form>
+    </div><!-- deleteitemform_div --> 
+
+    <div id="downloadform_div">
+        <h4>Download Form</h4>
+		<form id="download_form" method="GET" action="/download/:urlfile">
+            <label for="download_item_path">Item Path:</label>
+            <input type="text" id="urlfile" name="urlfile" value="" />
+		</form>
+   </div><!-- downloadform_div --> 
+
+   <div id="searchform_div">
+    <form id="searchform" method="POST" action="/search">
+        <h4>Search Form</h4>
+        <label for="searchinput">Word(s) to Find:</label><br>
+        <input type="text" title="Search Input Textbox" id="searchinput" name="searchinput" value="" />
+        <p>Search:</p>
+            <label for="searchxmlnames"><input type="radio" name="searchtype" id="searchxmlnames" value="xmlfilenames" checked /> XML File Name</label><br>
+            <label for="searchxmlcontent"><input type="radio" id="searchxmlcontent" name="searchtype" value="xmlcontent" /> XML File Name and Content</label><br>
+            <label for="searchothernames"><input type="radio" name="searchtype" id="searchothernames" value="otherfilenames" /> Other File Name</label><br>
+        <input type="text" hidden id="thislevel" name="thislevel" value="" />
+        <button type="submit" class="formrightbtn" id="submitsearch" title="Search Button"><img src="images/glyphicons-199-ok-circle.png" /></button>
+    </form>
+   </div><!-- searchform_div --> 
+
+    <div id="thisurl_div" hidden><%- thisurl %></div>
+    <div id="presentpath_div" hidden></div>
+    <div id="breadcrumbs">Home</div>
+
+    <div id="resulttype_div" hidden><%= resulttype %></div>
+    <div id="searchpanel_div">
+        <h4>Search Results</h4>
+        <div id="searchmessage_div">            
+            <%- searchresults[0].name %>
+        </div>       
+        <div id="searchresults_div">
+            <% var i, thisurl, searchname;
+                for (i = 0; i < searchresults.length; i+=1) { 
+                    searchname = "searchname" + i;
+                    searchpath = "searchpath" + i;
+            %>
+            <p><span hidden id="<%= searchpath %>"><%- searchresults[i].path %></span><a href="#" id="<%= searchname %>" class="searchlink"><%- searchresults[i].name %></a><br>located: <%- searchresults[i].path %></p>
+            <% } %>      
+        </div>       
+        <button id="closesearchpanelbtn" title="Close Search Results Panel"><img src="images/glyphicons-370-collapse-top.png" /></button>
+    </div>
+        
+    <div class="explorer"></div>
+
+</body>
+
+    <script src="js/scripts.js"></script>
+    <script src="js/xmlscript.js"></script>
+</html>
