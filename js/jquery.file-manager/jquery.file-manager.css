@@ -1,0 +1,135 @@
+.file-manager-window {
+    height: 100%;
+    overflow-y: auto;
+    position: relative;
+    padding: 10px 0;
+    margin-top: 10px;
+}
+
+.file-manager-window folder,
+.file-manager-window file {
+    background-repeat: no-repeat;
+    background-position: center 5px;
+    background-size: 45px 45px;
+    font-size: 11px;
+    text-align: center;
+    font-weight: bold;
+    display: inline-block;
+    cursor: default;
+    width: 75px;
+    padding-top: 60px;
+    margin: 5px;
+    vertical-align: top;
+    border: 1px solid transparent;
+    word-wrap:break-word;
+    /*position: relative;*/
+    box-sizing: border-box;
+}
+
+.file-manager-window folder:hover,
+.file-manager-window file:hover,
+.file-manager-window folder.ui-selecting,
+.file-manager-window folder.drop-container,
+.file-manager-window file.ui-selecting {
+    border: 1px solid #CEE8FC;
+    background-color: rgba(0, 139, 255, 0.06);
+}
+
+
+.file-manager-window folder.ui-selected,
+.file-manager-window file.ui-selected,
+.ui-selectable-helper {
+    border: 1px solid #96D1FC;
+    background-color: rgba(0, 149, 255, 0.11);
+}
+
+.file-manager-window folder {
+    background-image: url(images/folder.png);
+}
+
+.file-manager-window file {
+    background-image: url(images/file.png);
+}
+
+.file-manager-window .ui-draggable-dragging {
+    background-color: transparent !important;
+    border:none !important;
+    z-index: 999;
+}
+
+.file-manager-window [extension="doc"], .file-manager-window [extension="docx"] {
+    background-image: url(images/doc.png);
+}
+
+.file-manager-window [extension="pdf"] {
+    background-image: url(images/pdf.png);
+}
+
+.file-manager-window [extension="webm"],
+.file-manager-window [extension="mkv"],
+.file-manager-window [extension="avi"],
+.file-manager-window [extension="mov"],
+.file-manager-window [extension="qt"],
+.file-manager-window [extension="wmv"],
+.file-manager-window [extension="rm"],
+.file-manager-window [extension="rmvb"],
+.file-manager-window [extension="mp4"],
+.file-manager-window [extension="mpg"],
+.file-manager-window [extension="mpeg"],
+.file-manager-window [extension="3gp"] {
+    background-image: url(images/video.png);
+}
+
+.file-manager-window [extension="jpg"],
+.file-manager-window [extension="jpeg"],
+.file-manager-window [extension="png"],
+.file-manager-window [extension="gif"],
+.file-manager-window [extension="bmp"] {
+    background-image: url(images/image.png);
+}
+.list-view folder, .list-view file {
+  width: 23%;
+  padding-top: 0;
+  padding-left: 30px;
+  background-position: 5px center;
+  background-size: 18px;
+  line-height: 26px;
+  text-align: left;
+  height:30px;
+  overflow-y:hidden;
+}
+
+/* context menu styles */
+
+.iw-mIcon {
+    width: 15px;
+    height: 15px;
+    left: 6px;
+    top: 4px;
+}
+
+.iw-contextMenu {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 1px 2px rgba(0,0,0,0.1);
+    border: 1px solid rgba(61,70,77,0.1);
+}
+
+.iw-contextMenu li {
+    font-size: 14px;
+    color: black;
+    font-family: 'Roboto', sans-serif;
+    padding: 6px 40px;
+    border:none;
+}
+.iw-contextMenu li:last-child{
+    border-bottom: none;
+}
+
+li.iw-mSelected {
+    background-color: #e3f2ff;
+}
+
+
+
+/* end of context menu styles */
