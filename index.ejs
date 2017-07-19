@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XML File Manager</title>
     <link href="css/contextMenu.css" rel="stylesheet" type="text/css" />
-<!--    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">  -->
     <link media="all" rel="stylesheet" href="css/jquery-ui.css" />
     <link media="all" rel="stylesheet" href="css/bootstrap.css" />
     <link media="all" rel="stylesheet" href="css/default.css" />
@@ -64,6 +63,25 @@
             <input type="text" name="delete_item_parent" id="delete_item_parent" placeholder="delete_item_parent" value="" />
         </form>
     </div><!-- deleteitemform_div --> 
+
+    <div id="edititemform_div">
+     <!--   <h4>Edit File/Folder Form</h4> //MIGHT USE LATER FOR EDIT TEXT AS WELL -->
+        <h4>Rename File/Folder Form</h4>
+        <form id="edititem_form" method="POST" action="/edititem">
+            <label for="new_name">New Name:</label>
+            <input type="text" name="new_name" id="new_name" value="" /> 
+            <label for="yesfolder"><input type="checkbox" name="yesfolder" id="yesfolder" /> YES, change path also. (Note: folder only)</label>
+            <div id="newpathdiv">
+            <label for="new_path_name">New Path Name:</label>
+            <input type="text" name="new_path_name" id="new_path_name" value="" /> 
+            </div>
+            <input hidden type="text" name="edit_item_id" id="edit_item_id" value="" />
+            <input hidden type="text" name="edit_item_parent" id="edit_item_parent" value="" />
+            <br>
+            <button type="submit" class="formrightbtn" id="submitedit" title="Edit Item Button"><img src="images/glyphicons-199-ok-circle.png" /></button>
+            <button type="reset" class="formrightbtn" id="resetedit" title="Reset Edit Form button"><img src="images/glyphicons-82-refresh.png" /></button>
+       </form>
+    </div><!-- edititemform_div --> 
 
     <div id="downloadform_div">
         <h4>Download Form</h4>

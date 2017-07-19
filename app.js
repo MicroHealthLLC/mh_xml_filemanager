@@ -150,13 +150,13 @@ app.post("/uploadfile", function(req, res) {
                 var f, thisfile, x;
                 for (f = 0; f < req.files.length; f+=1) {
                     thisfile = req.files[f].filename;
-                    fs.rename("/mh_xml_filemanager/uploads/assets2/" + thisfile, "/mh_xml_filemanager/files" + file_upload_directory + thisfile, function (err) {
-                        if (err) {
-                            console.log('Error moving ' + thisfile + ' to ' + file_upload_directory);
-                            res.render('index', {thisurl: thisurl, searchresults: searchresults, resulttype: "0"});  
-                            return;
-                        }
-                    });
+                    try {
+                        fs.renameSync("/mh_xml_filemanager/uploads/assets2/" + thisfile, "/mh_xml_filemanager/files" + file_upload_directory + thisfile);
+                    } catch(err) {
+                        console.log('Error moving ' + thisfile + ' to ' + file_upload_directory);
+                        res.render('index', {thisurl: thisurl, searchresults: searchresults, resulttype: "0"});  
+                        return;
+                    }
                     uploadfiles.push(thisfile);
                 }
                 try {
@@ -312,6 +312,125 @@ app.post("/search", function(req, res) {
     res.render('index', {thisurl: thisurl, searchresults: searchresults, resulttype: resulttype});   
 });
 
+
+
+//****  EDIT A FILE OR FOLDER  **********************************************
+
+app.post("/edititem", function(req, res) {
+    "use strict";
+    var item_id = req.body.edit_item_id;
+    var item_parent = req.body.edit_item_parent;
+    var new_name = req.body.new_name.trim();
+    var yesfolder = req.body.yesfolder;
+    var thisurl = "/files" + item_parent;
+    var searchresults = [{name:"", path:""}];
+    if ((item_id !== "") && (item_parent !== "") && (new_name !== "")) {
+        var data, i, json, found;
+        try {
+            data = fs.readFileSync("files" + item_parent + "root.json", "utf-8");
+        } catch (err) {
+            console.log('Error reading from edititem: ' + thisurl + "root.json");
+            res.render('index', {thisurl: thisurl, searchresults: searchresults, resulttype: "0"});
+            return;
+        }
+        json = JSON.parse(data);
+        i = -1, found = false;
+        while ((found === false) && (i < json.length - 1)) {
+            i+=1;
+            if (json[i].id === Number(item_id)) {
+                found = true;
+            }
+        }
+        if (found === true) {
+            var j, new_path, old_name = json[i].name;
+            if (json[i].type === "file") {
+                j = json[i].path.indexOf(old_name);
+                new_path = json[i].path.slice(0, j) + new_name + "." + json[i].extension;
+                json[i].path = new_path;
+                try {
+                    fs.renameSync("/mh_xml_filemanager/files" + item_parent + old_name + "." + json[i].extension, "/mh_xml_filemanager/files" + item_parent + new_name + "." + json[i].extension);
+                } catch(err) {
+                    console.log('Error renaming file: ' + old_name + ' to ' + new_name);
+                    res.render('index', {thisurl: thisurl, searchresults: searchresults, resulttype: "0"});  
+                    return;
+                }
+            }
+            json[i].name = new_name;
+            var changepath = false;
+            if ((json[i].type === "directory") && (yesfolder !== undefined)) {
+                var new_path_name = req.body.new_path_name.trim();
+                var old_path_name = json[i].path;
+                if (new_path_name !== "") {
+                    changepath = true;
+                    new_path_name = "/files" + item_parent + new_path_name + "/";
+                    json[i].path = new_path_name;
+                } else {
+                    console.log('Yes, change folder path was checked, but new_path_name was blank!');
+                }
+            }
+            try {
+                fs.writeFileSync("files" + item_parent + "root.json", JSON.stringify(json));
+            } catch(err) {
+                console.log("Error writing file for edititem: " + "files" + item_parent + "root.json");
+                return;
+            }
+            if ((changepath === true) && (yesfolder !== undefined)) {
+                try {
+                    var theserootfiles = fs.readFileSync("files/rootfiles.json", "utf8");
+                } catch (err) {
+                    console.log("Error reading for rename folder path: files/rootfiles.json");
+                    return;
+                }
+                var rootfiles = JSON.parse(theserootfiles);
+                var n, p, thisroot, r, thisnewpath;
+                for (n = rootfiles.length - 1; n >= 0; n-=1) {
+                    if (rootfiles[n].path.indexOf(old_path_name) > -1) {
+                        thisroot = rootfiles[n].path.slice(1);
+                        try {
+                            data = fs.readFileSync(thisroot, "utf-8");
+                        } catch (err) {
+                            console.log('Error reading from edititem: ' + rootfiles[n].path);
+                            res.render('index', {thisurl: thisurl, searchresults: searchresults, resulttype: "0"});
+                            return;
+                        }
+                        json = JSON.parse(data);
+                        r = old_path_name.length;
+                        for (p = 0; p < json.length; p+=1) {
+                            thisnewpath = new_path_name + json[p].path.slice(r);
+                            json[p].path = thisnewpath;
+                        }
+                        try {
+                            fs.writeFileSync(thisroot, JSON.stringify(json));
+                        } catch(err) {
+                            console.log("Error writing file for edititem: " + thisroot);
+                            return;
+                        }
+                        thisnewpath = new_path_name + rootfiles[n].path.slice(r);                           
+                        rootfiles[n].path = thisnewpath;
+                    }
+                    try {
+                        fs.writeFileSync("files/rootfiles.json", JSON.stringify(rootfiles));
+                    } catch(err) {
+                        console.log("Error writing file for edititem: files/rootfiles.json");
+                        return;
+                    }                            
+                }
+                try {
+                    fs.renameSync("/mh_xml_filemanager" + old_path_name, "/mh_xml_filemanager" + new_path_name);
+                } catch(err) {
+                    console.log('Error renaming folder: ' + old_path_name + ' to ' + new_path_name);
+                    res.render('index', {thisurl: thisurl, searchresults: searchresults, resulttype: "0"});  
+                    return;
+                }
+            }                  
+        } else {
+            console.log('Error, item with ID = ' + item_id + ' not found in root.json under folder ' + item_parent + ' so could not edit!');
+        }  
+    } else {
+        console.log('Perform select/edit function again');        
+    }
+    res.render('index', {thisurl: thisurl, searchresults: searchresults, resulttype: "0"});   
+});
 
 
 //****  DELETE A FILE OR FOLDER  **********************************************
