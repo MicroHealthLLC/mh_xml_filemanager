@@ -149,11 +149,14 @@ var print = function(param) {
                     item = selectedItems.eq(a);
                     $("#urlfile").val(item.data().path);
                     if (presentpath !== "/files/") {
+                        $("#edit_item_parent").val(presentpath.slice(6));
                         $("#delete_item_parent").val(presentpath.slice(6));
                     } else {
+                        $("#edit_item_parent").val("/");
                         $("#delete_item_parent").val("/");
                     }
                     file_manager.selection.push(item.attr('id'));
+                    $("#edit_item_id").val(file_manager.selection[0]);
                     $("#delete_item_id").val(file_manager.selection[0]);
                 }
 
