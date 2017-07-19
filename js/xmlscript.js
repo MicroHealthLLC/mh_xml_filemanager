@@ -147,8 +147,6 @@ $("#addfileuploadbtn").click(function (e) {
     }
 });
 
-
-
 $("body").on("click", "#downloadfilebtn", function() {
     "use strict";
     if ($("#urlfile").val() !== "") {
@@ -163,6 +161,47 @@ $("body").on("click", "#downloadfilebtn", function() {
     }
 });
 
+$("#yesfolder").change(function () {
+    "use strict";
+    $("#new_path_name").val("");
+    if (document.getElementById("yesfolder").checked === true) {
+        $("#newpathdiv").show();
+    } else {
+        $("#newpathdiv").hide();
+    }
+});
+
+$("#resetedit").click(function(e) {
+    "use strict";
+    e.preventDefault();
+    $("#new_name").val("");
+    $("#yesfolder").prop("checked", false);
+    $("#newpathdiv").hide();
+});
+
+$("body").on("click", "#edititembtn", function() {
+    "use strict";
+    $("#resetedit").click();
+    if (document.getElementById("edititemform_div").style.display === "block") {
+        $("#edititemform_div").hide();
+    } else {
+        $("#edititemform_div").show();
+    }
+});
+
+$("#submitedit").click(function (e) {
+    "use strict";
+    e.preventDefault();
+    if ($("#new_name").val().trim() !== "") {
+        if ((document.getElementById("yesfolder").checked === true) && ($("#new_path_name").val().trim() === "")) {
+            alert("Input name of new path for folder, or uncheck YES box!");
+        } else {
+            $("#edititem_form").submit();
+        }
+    } else {
+        alert("Input edit info!");
+    }
+});
 
 $("body").on("click", "#deleteitembtn", function() {
     "use strict";    
@@ -216,6 +255,8 @@ $(window).load(function () {
     $("#newfolder_div").hide();
     $("#uploadfile_form").reset();
     $("#uploadfile_div").hide();
+    $("#edititem_form").reset();
+    $("#edititemform_div").hide();
     $("#deleteitem_form").reset();
     $("#deleteitemform_div").hide();
 });
