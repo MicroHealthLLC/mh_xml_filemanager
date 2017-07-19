@@ -58,12 +58,9 @@ body * {
 #homebtn {width:19px;height:18px;}
 #levelupbtn {width:23px;height:18px;}
 #newfolderbtn {width:21px;height:18px;}
-#uploadbtn {width:19px;height:19px;}
-#downloadfilebtn {width:19px;height:19px;}
-#deleteitembtn {width:19px;height:19px;}
-#searchbtn {width:19px;height:19px;}
+#uploadbtn, #downloadfilebtn, #deleteitembtn, #searchbtn {width:19px;height:19px;}
 #gridviewbtn {width:18px;height:18px;}
-#listviewbtn {width:20px;height:18px;}
+#listviewbtn, #edititembtn {width:20px;height:18px;}
 
 h4 {font-size:15px;font-weight:bold;}
 
@@ -86,6 +83,12 @@ h4 {font-size:15px;font-weight:bold;}
 #uploadbtns {margin-top:-35px;}
 #addfileuploadbtn {clear:both;margin-top:20px;}
 #addfileuploadbtn img {width:19px;height:18px;}
+
+#edititemform_div {z-index:2000;position:absolute;display:none; width: 400px; height: 250px; margin:10px 0 0 10px; padding: 10px 15px; background: #ddd; border: 1px solid #3498DB;}
+#edititemform_div label {margin-top:15px;margin-bottom:0;}
+#new_name, #new_path_name {width: 370px;}
+#newpathdiv {margin-bottom: -25px;}
+#submitedit {clear:both;}
 
 #deleteitemform_div {z-index:2000;position:absolute;display:none; width: 400px; height: 150px; margin:10px 0 0 10px; padding: 10px 15px; background: #ddd; border: 1px solid #3498DB;}
 #deleteitemform_div label {margin-top:15px;margin-bottom:0;float:left;}
@@ -137,14 +140,14 @@ h4 {font-size:15px;font-weight:bold;}
 }
 
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1240px) {
   #menu_icons ul li {margin-left:15px;}
 }
 
-@media screen and (min-width: 1100px) and (max-width: 1199px) {
+@media screen and (min-width: 1140px) and (max-width: 1239px) {
   #menu_icons ul li {margin-left:10px;}
 }
-@media screen and (min-width: 960px) and (max-width: 1099px) {
+@media screen and (min-width: 960px) and (max-width: 1139px) {
   #menu_icons ul li {margin-left:3px;}
 }
 
@@ -162,14 +165,15 @@ h4 {font-size:15px;font-weight:bold;}
   #menu_icons ul li {margin-left:15px;}
 }
 @media screen and (min-width: 600px) and (max-width: 659px) {
-  #menu_icons ul li {margin-left:10px;}
-}
-@media screen and (min-width: 540px) and (max-width: 599px) {
   #menu_icons ul li {margin-left:5px;}
 }
 
-@media screen and (max-width: 539px) {
+@media screen and (min-width: 540px) and (max-width: 599px) {
   #menu_icons ul li {margin-left:2px;}
+}
+
+@media screen and (max-width: 539px) {
+  #menu_icons ul li {margin-left:0;}
 }
 
 
