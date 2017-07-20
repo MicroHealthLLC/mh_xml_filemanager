@@ -84,6 +84,7 @@
 .file-manager-window [extension="jpeg"],
 .file-manager-window [extension="png"],
 .file-manager-window [extension="gif"],
+.file-manager-window [extension="svg"],
 .file-manager-window [extension="bmp"] {
     background-image: url(images/image.png);
 }
